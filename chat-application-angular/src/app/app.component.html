@@ -1,0 +1,49 @@
+<h1>
+  Real time chat applicaion
+</h1>
+
+<div>
+  <div class="header">
+    <div class="row">
+      <div>
+        <span>Username</span>
+        <input type="text" [(ngModel)]="user" placeholder="Enter username">
+      </div>
+      <div>
+        <span>Choose room</span>
+        <select [(ngModel)]="room">
+          <option value="Lobby">Lobby</option>
+          <option value="Hall">Hall</option>
+          <option value="Deluxe">Deluxe</option>
+        </select>
+      </div>
+      <div>
+        <button (click)="join()">Join</button>
+        <button (click)="leave()">Leave</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div *ngFor="let item of FromMessageArray">
+      <span><strong>{{item.user}}</strong> : {{item.message}}</span>
+    </div>
+    *******************************************
+    <div *ngFor="let item of ToMessageArray">
+      <span><strong>{{item.user}}</strong> : {{item.message}}</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <input type="text" [(ngModel)]="messageText">
+    </div>
+    <div>
+      <button (click)="sendMessage()">Send</button>
+      <button (click)="getUserDetails()">Get All user Details</button>
+      <div *ngIf="data">
+        current users data
+        {{data | json}}
+      </div>
+    </div>
+  </div>
+</div>
