@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "node server.js",
+    "build": "cd chat-application-angular && ng build --aot --prod",
+    "install-client": "cd chat-application-angular && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build"
   },
   "keywords": [],
   "author": "",
@@ -14,5 +16,9 @@
     "express": "^4.17.1",
     "nodemon": "^2.0.6",
     "socket.io": "^3.0.3"
+  },
+  "engines": {
+    "node": "~14.15.1",
+    "npm": "~6.14.8"
   }
 }
