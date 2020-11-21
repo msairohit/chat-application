@@ -8,6 +8,7 @@ import { ChatService } from './services/chat.service';
 })
 export class AppComponent {
   title = 'chat-application-angular';
+//   https://www.youtube.com/watch?v=vpQDkEgO-kA
   user: String;
   room: String;
   FromMessageArray: Array<{ user: String, message: String }> = [];
