@@ -7,10 +7,9 @@ import { io } from 'socket.io-client';
 })
 export class ChatService {
 
-  HOST = location.origin.replace(/^http/, 'ws');
-  constructor() { console.log(this.HOST)}
+  constructor() { }
 
-  private socket = io(this.HOST);
+  private socket = io('http://localhost:3000');
 
   joinRoom(data) {
     this.socket.emit('join', data);

@@ -1,24 +1,15 @@
 const express = require('express');
-const path = require('path');
 const app = express();
-// Serve only the static files form the dist directory
-app.use(express.static(__dirname + './chat-application-angular/dist/chat-application-angular'));
-
-app.get('*', function(req,res) {
-  res.sendFile(path.join(__dirname + './chat-application-angular/dist/chat-application-angular/index.html'));
-});
-
 const server = require('http').Server(app);
 const io = require('socket.io')(server, {
     cors: {
-        origin: "*",
+        origin: "http://localhost:4200",
         methods: ["GET", "POST"]
     }
 })
 
-var PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-    console.log("listening on port : " + PORT);
+server.listen(3000, () => {
+    console.log("listening..");
 })
 
 
