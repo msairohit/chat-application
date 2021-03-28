@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ChatService } from './services/chat.service';
 
 @Component({
@@ -16,7 +17,11 @@ export class AppComponent {
   messageText: String;
   data;
 
-  constructor(private chatSservice: ChatService) {
+  videoUrl;
+
+  displayVideo: boolean = false;
+
+  constructor(private chatSservice: ChatService,private sanitizer: DomSanitizer) {
     this.chatSservice.newUserJoined().subscribe(
       data => {
         this.FromMessageArray.push(data);
@@ -60,5 +65,54 @@ export class AppComponent {
 
   getUserDetails() {
     this.chatSservice.GetUserDetails({ user: this.user, room: this.room });
+  }
+
+  addVideoToSite(url: string) {
+    let embedUrl;
+    if (url.includes('index')) {
+      embedUrl = this.convertPlaylistUrlToNormalEmbedUrl(url);
+    } else {
+      embedUrl = this.convertNormalUrlToEmbed(url);
+    }
+    this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
+    console.log(this.videoUrl);
+    this.displayVideo = true;
+  }
+
+  /**
+   * 
+   * @param url Normal video url
+   * from https://www.youtube.com/watch?v=9YffrCViTVk
+      to https://www.youtube.com/embed/9YffrCViTVk
+
+   * @returns Embed url for that video
+   */
+  convertNormalUrlToEmbed(url: string): string {
+    let embedUrl = url.replace("watch?v=", "embed/");
+    return embedUrl;
+  }
+
+
+  /**
+   * 
+   * @param url 
+   * from https://www.youtube.com/watch?v=PSJiF18ewdo&list=PLGWM-WydG5jJWmFUe3l7YXAwFmMZWieW8&index=12
+      to https://www.youtube.com/embed/PSJiF18ewdo?list=PLGWM-WydG5jJWmFUe3l7YXAwFmMZWieW8"
+   * @returns 
+   */
+  convertPlaylistUrlToNormalEmbedUrl(url: string): string {
+    let embedUrl = url.replace("watch?v=", "embed/");
+    //split in order to remove last index part 
+    let splitUrl = embedUrl.split("&");
+    let requiredString = '';
+
+    //not adding the last index part to the url.
+    for (let i = 0; i < splitUrl.length - 1; i++) {
+      requiredString += '&' + splitUrl[i];
+    }
+
+    //substring for removing the starting & added above.
+    let result = requiredString.substring(1).replace("&", "?");
+    return result;
   }
 }

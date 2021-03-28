@@ -46,4 +46,14 @@
       </div>
     </div>
   </div>
+
+  <div>
+    Enter video Url: <input type="text" #videoEmbedUrl>
+    <button (click)="addVideoToSite(videoEmbedUrl.value)">Add video</button>
+  </div>
+  <div class="iframe-container" *ngIf="displayVideo">
+    <iframe width="1519" height="554" [src]=videoUrl title="YouTube video player" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen></iframe>
+  </div>
 </div>
