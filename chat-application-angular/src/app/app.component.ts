@@ -21,6 +21,8 @@ export class AppComponent {
 
   displayVideo: boolean = false;
 
+  youtubeVideoAddedByThisUser: boolean = false;
+
   constructor(private chatSservice: ChatService,private sanitizer: DomSanitizer) {
     this.chatSservice.newUserJoined().subscribe(
       data => {
@@ -49,6 +51,14 @@ export class AppComponent {
         this.data = data;
       }
     );
+    this.chatSservice.newYoutubeVideoAdded().subscribe(
+      (data: any) => {
+        console.log(data);
+        //commenting because not using iframe youtube embedded link, uncomment for using that.
+        // this.addVideoToSiteWithoutSendingToServer(data.data.message.changingThisBreaksApplicationSecurity);
+        this.addVideoToSiteWithoutSendingToServer(data.data.message);
+      }
+    );
   }
 
   join() {
@@ -68,15 +78,40 @@ export class AppComponent {
   }
 
   addVideoToSite(url: string) {
-    let embedUrl;
+/*     let embedUrl;
+    console.log(url);
     if (url.includes('index')) {
       embedUrl = this.convertPlaylistUrlToNormalEmbedUrl(url);
     } else {
       embedUrl = this.convertNormalUrlToEmbed(url);
     }
+    embedUrl += `?enablejsapi=1`;
     this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
-    console.log(this.videoUrl);
+    console.log(this.videoUrl); */
+    console.log(url);
+    this.videoUrl = url;
     this.displayVideo = true;
+
+    this.youtubeVideoAddedByThisUser = true;
+    this.chatSservice.addNewYoutubeVideo({ user: this.user, room: this.room, message: this.videoUrl });
+  }
+
+  displayVideoWithoutControls: boolean = false;
+  addVideoToSiteWithoutSendingToServer(url: string) {
+    /* let embedUrl;
+    console.log(url);
+    if (url.includes('index')) {
+      embedUrl = this.convertPlaylistUrlToNormalEmbedUrl(url);
+    } else {
+      embedUrl = this.convertNormalUrlToEmbed(url);
+    }
+    embedUrl += `?controls=0&autoplay=0&showinfo=0&enablejsapi=1`;
+    this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
+    console.log(this.videoUrl); */
+    console.log(url);
+    this.videoUrl = url;
+    this.displayVideoWithoutControls = true;
+    
   }
 
   /**
