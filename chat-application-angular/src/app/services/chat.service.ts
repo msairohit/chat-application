@@ -63,7 +63,7 @@ export class ChatService {
   userDetails() {
     // { user: String, message: String, noOfMessages: string}
     let observable = new Observable<any>(observer => {
-      this.socket.on('all users', (data:any) => {
+      this.socket.on('all users', (data: any) => {
         console.log(data);
         observer.next(data);
       });

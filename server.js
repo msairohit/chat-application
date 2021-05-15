@@ -57,7 +57,7 @@ io.on('connection', socket => {
     socket.on('message', data => {
         let messageCount = userAndNoOfMessages.get(data.user);
         console.log(messageCount);
-        userAndNoOfMessages.set(data.user, messageCount === undefined ? 1 : (messageCount+1))
+        userAndNoOfMessages.set(data.user, messageCount === undefined ? 1 : (messageCount + 1))
         console.log(userAndNoOfMessages);
         //io.in user who sent message will also get the message, whereas broadcast will not send to same user.
         usermapData.set(data.user, { userName: data.user, room: data.room, noOfMessages: userAndNoOfMessages.get(data.user), roomAdmin: usermapData.get(data.user).roomAdmin });
@@ -74,7 +74,7 @@ io.on('connection', socket => {
                 data: value
             }
             body.push(obj);
-          }
+        }
         io.in(data.room).emit('all users', { data: body })
     })
 
@@ -87,6 +87,6 @@ io.on('connection', socket => {
     })
 
     socket.on('videoResumed', data1 => {
-        socket.broadcast.to(data1.room).emit('resume video', { data: data1})
+        socket.broadcast.to(data1.room).emit('resume video', { data: data1 })
     })
 })

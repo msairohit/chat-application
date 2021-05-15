@@ -9,7 +9,7 @@ import { ChatService } from './services/chat.service';
 })
 export class AppComponent {
   title = 'chat-application-angular';
-//   https://www.youtube.com/watch?v=vpQDkEgO-kA
+  //   https://www.youtube.com/watch?v=vpQDkEgO-kA
   user: String;
   room: String;
   FromMessageArray: Array<{ user: String, message: String }> = [];
@@ -23,7 +23,7 @@ export class AppComponent {
 
   youtubeVideoAddedByThisUser: boolean = false;
 
-  constructor(private chatSservice: ChatService,private sanitizer: DomSanitizer) {
+  constructor(private chatSservice: ChatService, private sanitizer: DomSanitizer) {
     this.chatSservice.newUserJoined().subscribe(
       data => {
         this.FromMessageArray.push(data);
@@ -78,16 +78,16 @@ export class AppComponent {
   }
 
   addVideoToSite(url: string) {
-/*     let embedUrl;
-    console.log(url);
-    if (url.includes('index')) {
-      embedUrl = this.convertPlaylistUrlToNormalEmbedUrl(url);
-    } else {
-      embedUrl = this.convertNormalUrlToEmbed(url);
-    }
-    embedUrl += `?enablejsapi=1`;
-    this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
-    console.log(this.videoUrl); */
+    /*     let embedUrl;
+        console.log(url);
+        if (url.includes('index')) {
+          embedUrl = this.convertPlaylistUrlToNormalEmbedUrl(url);
+        } else {
+          embedUrl = this.convertNormalUrlToEmbed(url);
+        }
+        embedUrl += `?enablejsapi=1`;
+        this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
+        console.log(this.videoUrl); */
     console.log(url);
     this.videoUrl = url;
     this.displayVideo = true;
@@ -111,7 +111,7 @@ export class AppComponent {
     console.log(url);
     this.videoUrl = url;
     this.displayVideoWithoutControls = true;
-    
+
   }
 
   /**
