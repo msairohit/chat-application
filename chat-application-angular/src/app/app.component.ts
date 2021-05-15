@@ -10,10 +10,29 @@ import { ChatService } from './services/chat.service';
 export class AppComponent {
   title = 'chat-application-angular';
   //   https://www.youtube.com/watch?v=vpQDkEgO-kA
+
+  /* 
+                        TODO:
+  ==================================================
+  make youtube video responsive
+  send and received messages alignment in UI -- done
+  use bootstrap components for all inputs and all
+  add sidebar or navigation bar for loading different components based on user choice like 
+      simple chatting, viewing youtube video, playing multiplayer games etc.(add all these features.)
+  if possible make this chat as chat bot kind of component so that it can be floating around with single button not blocking entire page.
+      or else transparent overlay component which can be displayed on top of video player.
+  Add database and save all data like users logegd in, messages sent, user is admin or not,yoube videos watch history etc.
+  Add session once user joins a chat room and chat should be saved and retrieved from DB even if we refresh the page.
+  Display joined username at top all the time. -- done
+  After entering some data enter should click the button e.g. after room selection join button and after entering message send button.
+  support to send emojis, gifs, images, videos when chatting.
+   */
+
+
+
   user: String;
   room: String;
-  FromMessageArray: Array<{ user: String, message: String }> = [];
-  ToMessageArray: Array<{ user: String, message: String }> = [];
+  messages: Array<{ user: String, message: String }> = [];
   messageText: String;
   data;
 
@@ -22,26 +41,24 @@ export class AppComponent {
   displayVideo: boolean = false;
 
   youtubeVideoAddedByThisUser: boolean = false;
+  userJoined: boolean = false;
 
   constructor(private chatSservice: ChatService, private sanitizer: DomSanitizer) {
     this.chatSservice.newUserJoined().subscribe(
       data => {
-        this.FromMessageArray.push(data);
+        this.messages.push(data);
       }
     );
 
     this.chatSservice.leftRoom().subscribe(
       data => {
-        this.FromMessageArray.push(data);
+        this.messages.push(data);
       }
     );
 
     this.chatSservice.newMessageReceived().subscribe(
       data => {
-        if (data.user !== 'sai')
-          this.FromMessageArray.push(data);
-        else
-          this.ToMessageArray.push(data);
+          this.messages.push(data);
       }
     );
 
@@ -63,14 +80,17 @@ export class AppComponent {
 
   join() {
     this.chatSservice.joinRoom({ user: this.user, room: this.room });
+    this.userJoined = true;
   }
 
   leave() {
     this.chatSservice.leaveRoom({ user: this.user, room: this.room });
+    this.userJoined = false;
   }
 
   sendMessage() {
     this.chatSservice.sendMessage({ user: this.user, room: this.room, message: this.messageText });
+    this.messageText = '';
   }
 
   getUserDetails() {

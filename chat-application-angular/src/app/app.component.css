@@ -17,3 +17,11 @@
     margin-left: 20px; */
     margin: 20px;
   }
+
+  .right-message{
+    text-align: right;
+}
+
+.left-message{
+  text-align: left;
+} 
