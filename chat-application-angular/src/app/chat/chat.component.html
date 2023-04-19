@@ -1,0 +1,89 @@
+<h1>
+    Real time chat applicaion
+</h1>
+<h1 style="text-align: right;" *ngIf="userJoined">
+    <!-- for emojis simply copy paste the emoji directly from  this url
+    https://unicode.org/emoji/charts/full-emoji-list.html#1f628 -->
+    welcome {{user}} 🤪
+</h1>
+<div class="row">
+    <div id="firstDiv" class="col-sm-3">
+        <p>
+            first col
+        </p>
+    </div>
+    <div id="secondDiv" class="col-sm-6">
+        <div class="header">
+            <div class="row">
+                <div>
+                    <span>Username</span>
+                    <input type="text" [(ngModel)]="user" placeholder="Enter username">
+                </div>
+                <div>
+                    <span>Choose room</span>
+                    <select [(ngModel)]="room">
+                        <option value="Lobby">Lobby</option>
+                        <option value="Hall">Hall</option>
+                        <option value="Deluxe">Deluxe</option>
+                    </select>
+                </div>
+                <div>
+                    <button class="btn btn-success" (click)="join()">Join</button>
+                    <button class="btn btn-danger" (click)="leave()">Leave</button>
+                </div>
+            </div>
+        </div>
+        <div>
+            Enter video Url: <input type="text" #videoEmbedUrl>
+            <button class="btn btn-info" (click)="addVideoToSite(videoEmbedUrl.value)">Add video</button>
+        </div>
+        <!--   <div class="iframe-container" *ngIf="displayVideo">
+      <iframe width="1519" height="554" [src]=videoUrl title="YouTube video player" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+  
+    <div class="iframe-container" *ngIf="displayVideoWithoutControls">
+      without controls
+      <iframe width="1519" height="554" [src]=videoUrl title="YouTube video player" frameborder="0"
+        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div> -->
+
+        <div *ngIf="displayVideo" style="margin-top: 20px;">
+            <app-youtube-player [completeVideoUrl]="this.videoUrl" [videoOwner]="true" [user]="user" [room]="room">
+            </app-youtube-player>
+        </div>
+
+        <div *ngIf="displayVideoWithoutControls" style="margin-top: 20px;">
+            <app-youtube-player [completeVideoUrl]="this.videoUrl" [displayControls]="0" [autoplay]="0"
+                [videoOwner]="false" [user]="user" [room]="room"></app-youtube-player>
+        </div>
+    </div>
+    <div id="third-div" class="col-sm-3">
+
+        <div class="row">
+            <ul>
+                <li *ngFor="let message of messages"
+                    [ngClass]="{'left-message' : message.user != user, 'right-message': message.user == user}"
+                    style="list-style-type: none;">
+                    <span><strong>{{message.user}}</strong> : {{message.message}}</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row">
+            <div>
+                <input type="text" [(ngModel)]="messageText">
+            </div>
+            <div>
+                <button class="btn btn-success" (click)="sendMessage()">Send</button>
+                <button class="btn btn-secondary" (click)="getUserDetails()">Get All user Details</button>
+                <div *ngIf="data">
+                    current users data
+                    {{data | json}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
