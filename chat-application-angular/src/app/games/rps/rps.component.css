@@ -1,0 +1,40 @@
+.main{
+    background-color: #ccc;
+}
+.options{
+    display: flex;
+    justify-content: center !important;
+}
+.option{
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    font-size: 2rem;
+    transition: 100ms;
+}
+
+.option:hover{
+    transform: scale(2);
+}
+.results{
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.result-emoji{
+    background: none;
+    border: none;
+    outline: none;
+    cursor: default;
+    font-size: 2rem;
+}
+
+.result-emoji.winner{
+    font-size: 5rem;
+    opacity: 5;
+}

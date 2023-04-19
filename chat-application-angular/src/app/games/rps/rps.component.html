@@ -1,0 +1,21 @@
+<p>rps works!</p>
+<div class="main">
+    <div class="options">
+        <button class="option" id="rock" (click)="handleClick('rock')">✊</button>
+        <button class="option" id="paper" (click)="handleClick('paper')">🖐️</button>
+        <button class="option" id="scissors" (click)="handleClick('scissors')">✌️</button>
+        <button class="btn btn-danger" (click)="reset()">Reset Game</button>
+    </div>
+    <div class="results" #results>
+        <div>
+            You :
+            <span class="result-score">{{userScore}}</span>
+        </div>
+        <div>
+            Computer :
+            <span class="result-score">{{computerScore}}</span>
+        </div>
+        <!--     <button class="result-emoji">🖐️</button>
+    <button class="result-emoji winner">✌️</button> -->
+    </div>
+</div>

@@ -9,6 +9,7 @@ import { ChatService } from './services/chat.service';
 })
 export class AppComponent {
   title = 'chat-application-angular';
+  featureGamesRps = true;
   //   https://www.youtube.com/watch?v=vpQDkEgO-kA
 
   /* 
